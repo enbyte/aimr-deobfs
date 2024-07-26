@@ -18,9 +18,7 @@ try:
         global hwid
         hwid = subprocess.check_output('wmic csproduct get uuid').decode().split('\n')[1].strip()
         if hwid in hwidlist:
-            print("Your HWID is banned, you can make a case in our discord to be unbanned.")
-            time.sleep(10)
-            exit()
+            print("Your HWID is banned (somehow), buuut... you can still use AIMr! Enjoy :)")
         else:
             pass
 
@@ -34,7 +32,7 @@ try:
     # randomize terminal/window title
     def set_console_title():
         while True:
-            randomchar = "AIMr " + remote_version + " " + ''.join(random.choices(string.ascii_letters + string.digits, k=16))
+            randomchar = "AIMr " + remote_version + " " + '- FOSS version by enbyte'
             ctypes.windll.kernel32.SetConsoleTitleW(randomchar)
             time.sleep(0.1)
 
@@ -104,25 +102,11 @@ try:
             data = json.load(file)
             activated = data["activated"]
 
-    if activated is not True:
-        def check_string(string):
-            numbers_count = sum(c.isdigit() for c in string)
-            symbols_count = sum(not c.isalnum() for c in string)
-            charcount = len(string)
-
-            if numbers_count == 5 and symbols_count == 2 and charcount == 16:
-                return True
-            else:
-                return False
+    if activated is not True: # wtf??? whatever happened to "if activated:" ??
+                              # "is not True" is crazy
             
         print("User ID: " + hwid)
-        key = input("OPEN https://is.gd/YuWC3r IN YOUR BROWSER TO GET A KEY | Enter your key: ")
         
-        if check_string(key):
-            print("Thank you for activating, AIMr will now install!")
-        else:
-            print("Please enter a valid key.")
-            exit()
         with open("localv.json", "w") as file:
             data["activated"] = True
             json.dump(data, file)
@@ -212,37 +196,23 @@ try:
 
     def clear_terminal():
         if os.name == "nt":
-            os.system("cls")
+            os.system("cls") # this is unreachable bruh like get better
         else:
             os.system("clear")
 
     clear_terminal()
     try:
+        # 14 unique imports??? crazy copy paste skid coding here
         import os
-        import cv2
-        import sys
         import json
         import time
-        import math
-        import typer
         import ctypes
         import random
         import string
-        import pystyle
-        import pyfiglet
-        import requests
-        import keyboard
-        import pyautogui
-        import bettercam
         import threading
         import subprocess
-        import numpy as np
-        import win32api, win32con
-        from pypresence import Presence
-        from colorama import Fore, Style
         from colorama import just_fix_windows_console
         just_fix_windows_console()
-        from pystyle import Colors, Colorate
 
     except ImportError:
         file_url = "https://raw.githubusercontent.com/ai-aimbot/AIMr/main/req.txt"
@@ -255,7 +225,7 @@ try:
 
         for i in range(total_lines):
             subprocess.run(["pip", "install", line_list[i], "-q"])
-            percent_installed = (i + 1) / total_lines * 100
+            percent_installed = (i + 1) / total_lines * 100 # lol
             print(f"Installing pip module {i+1}/{total_lines}. {percent_installed:.2f}% complete.", end='\r', flush=True)
     subprocess.run(["python", "config.py"])
 
@@ -263,6 +233,6 @@ except KeyboardInterrupt:
     exit()
 
 except Exception as e:
-    print(f"An error occurred: {e}")
+    print(f"An error occurred, exiting: {e}")
     # Wait for 15 seconds before closing
-    time.sleep(15)
+    # the above is one chatGPT ass comment
